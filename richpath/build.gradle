@@ -32,5 +32,5 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$appcompatVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-//    testImplementation "junit:junit:$junitVersion"
+    testImplementation "androidx.test.ext:junit:$androidXTestExtJunitVersion"
 }
