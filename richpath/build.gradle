@@ -1,14 +1,16 @@
+import com.doctorbox.plugins.*
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 //apply plugin: 'com.github.dcendents.android-maven'
 group = 'com.github.tarek360'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdk
+    compileSdkVersion 31
 
     defaultConfig {
-        minSdkVersion rootProject.ext.minSdk
-        targetSdkVersion rootProject.ext.targetSdk
+        minSdkVersion 24
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
         consumerProguardFiles 'consumer-proguard-rules.pro'
@@ -26,11 +28,11 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestImplementation("com.android.support.test.espresso:espresso-core:$espressoVersion", {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    implementation "androidx.appcompat:appcompat:$appcompatVersion"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    androidTestImplementation TestLibraries.espressoCore
 
-    testImplementation "androidx.test.ext:junit:$androidXTestExtJunitVersion"
+    implementation Libs.appcompatVersion
+
+    TestLibraries.testBaseLibrary.each { dependency ->
+        add("testImplementation", dependency)
+    }
 }
