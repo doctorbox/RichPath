@@ -7,12 +7,12 @@ import android.widget.ImageView
 import android.widget.ImageView.ScaleType
 import androidx.annotation.IntRange
 import com.richpath.listener.OnRichPathUpdatedListener
+import com.richpath.model.Vector
 import com.richpath.pathparser.PathParser
 import com.richpath.util.PathUtils
-import com.richpath.model.Vector
 import kotlin.math.min
 
-class RichPathDrawable(private val vector: Vector?, private val scaleType: ImageView.ScaleType): Drawable() {
+class RichPathDrawable(private val vector: Vector?, private val scaleType: ImageView.ScaleType) : Drawable() {
 
     private var width: Int = 0
     private var height: Int = 0
@@ -40,22 +40,33 @@ class RichPathDrawable(private val vector: Vector?, private val scaleType: Image
 
         val matrix = Matrix()
 
-        matrix.postTranslate(centerX - vector.currentWidth / 2,
-                centerY - vector.currentHeight / 2)
+        matrix.postTranslate(
+            centerX - vector.currentWidth / 2,
+            centerY - vector.currentHeight / 2
+        )
 
         val widthRatio = width / vector.currentWidth
         val heightRatio = height / vector.currentHeight
 
 
-        if (scaleType == ScaleType.FIT_XY) {
-            matrix.postScale(widthRatio, heightRatio, centerX, centerY)
-        } else {
-            val ratio: Float = if (width < height) {
-                widthRatio
-            } else {
-                heightRatio
+        when (scaleType) {
+            ScaleType.FIT_XY -> {
+                matrix.postScale(widthRatio, heightRatio, centerX, centerY)
             }
-            matrix.postScale(ratio, ratio, centerX, centerY)
+            ScaleType.CENTER_CROP -> {
+                val ratio: Float = if (width < height) {
+                    widthRatio
+                } else {
+                    heightRatio
+                }
+                matrix.postScale(ratio, ratio, centerX, centerY)
+            }
+            ScaleType.FIT_CENTER -> {
+                val ratio = min(widthRatio, heightRatio)
+                matrix.postScale(ratio, ratio, centerX, centerY)
+            }
+
+            else -> {}
         }
 
         val absWidthRatio = width / vector.viewportWidth
