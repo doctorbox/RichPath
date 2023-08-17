@@ -6,11 +6,13 @@ apply plugin: 'kotlin-android'
 group = 'com.github.tarek360'
 
 android {
-    compileSdkVersion 33
+    namespace 'com.richpath'
+
+    compileSdk 33
 
     defaultConfig {
-        minSdkVersion 24
-        targetSdkVersion 33
+        minSdk 24
+        targetSdk 33
         versionCode 1
         versionName "1.0"
         consumerProguardFiles 'consumer-proguard-rules.pro'
