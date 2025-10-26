@@ -8,11 +8,11 @@ group = 'com.github.tarek360'
 android {
     namespace 'com.richpath'
 
-    compileSdk 33
+    compileSdk 36
 
     defaultConfig {
         minSdk 24
-        targetSdk 33
+        targetSdk 36
         versionCode 1
         versionName "1.0"
         consumerProguardFiles 'consumer-proguard-rules.pro'
